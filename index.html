@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html ng-app="users">
+<head>
+    <title>Node Angular website</title>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-resource.min.js"></script>
+</head>
+<body>
+
+<div ng-controller="user">
+
+<div ng-view></div>
+
+</div>
+
+<script>
+angular.module("users",[])
+  .config(function($routeProvider){
+	$routeProvider
+	.when("/users/:id",{
+	    controller:"user",
+	    templateUrl:"single.html"
+	 })
+	.when("/",{
+	    controller:"usernames",
+	    templateUrl:"single.html"
+
+	 })
+   })
+   .factory("Contact",function($resource){
+	return $resource("/users/:id");
+    })
+   .controller('usernames',function($scope,$resource,Contact){
+	$scope.contacts = Contact.query();
+	
+    })
+   .controller('user',function($scope,@resource,$routeParams, Contact){
+	$scope.contact = Contact.get({id:$routeParams.id})
+	
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html ng-app>
+<head>
+<title>Angular practice</title>
+<script src = "lib/angular.min.js"></script>
+</head>
+<body>
+
+<div>
+<input type="search" ng-model="search"/>
+</div>
+
+<div ng-controller = "List">
+  <ul>
+    <li ng-repeat = "person in people | filter:search">
+	{{person.name}} : {{person.age}}
+	<button ng-click="remove($index)">x</button>
+	<span ng-show="$first">First!</span>
+	<span ng-show="$last">Last!</span>
+    </li>
+  </ul>
+
+<input type="text" ng-model="new_name"/>
+<input type="number" ng-model="new_age"/>
+<button ng-click="add()">Add</button>
+</div>
+
+<script>
+var List = function($scope){
+	$scope.people = [
+		{name:"Tom", age:20},
+		{name:"Jeffrey", age:30},
+		{name:"Dan",age:40},
+		{name:"David", age:50},
+		{name:"Peter",age:60}
+	];
+	$scope.add = function(){
+		$scope.people.push({
+			name:$scope.new_name,
+			age:$scope.new_age
+		});
+		$scope.new_name = "";
+		$scope.new_age = "";
+	};
+	$scope.remove = function(index){
+		$scope.people.splice(index,1);
+	}
+};
+
+
+</script>
+</body>
+</html>
+
