@@ -2,8 +2,8 @@
 <html ng-app="users">
 <head>
     <title>Node Angular website</title>
-    <script src="js/angular.min.js"></script>
-    <script src="js/angular-resource.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script type="text/javascript" src="http://code.angularjs.org/1.0.7/angular-resource.min.js"></script>
 </head>
 <body>
 
@@ -14,7 +14,7 @@
 </div>
 
 <script>
-angular.module("users",[])
+angular.module("users",['ngResource'])
   .config(function($routeProvider){
 	$routeProvider
 	.when("/users/:id",{
@@ -34,7 +34,7 @@ angular.module("users",[])
 	$scope.contacts = Contact.query();
 	
     })
-   .controller('user',function($scope,@resource,$routeParams, Contact){
+   .controller('user',function($scope,$resource,$routeParams, Contact){
 	$scope.contact = Contact.get({id:$routeParams.id})
 	
     })

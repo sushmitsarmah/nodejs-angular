@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html ng-app="users">
+<head>
+    <title>Node Angular website</title>
+    <script type="text/javascript" src="http://code.angularjs.org/1.0.7/angular.min.js"></script>
+    <script type="text/javascript" src="http://code.angularjs.org/1.0.7/angular-resource.min.js"></script>
+</head>
+<body>
+
+<div ng-controller="user">
+
+<div ng-view></div>
+
+</div>
+
+<script>
+angular.module("users",['ngResource'])
+  .config(function($routeProvider){
+	$routeProvider
+	.when("/users/:id",{
+		templateUrl:"partials/single.html",
+	    controller:"user"    
+	 })
+	.when("/",{
+		templateUrl:"hello.html",
+	    controller:"usernames"    
+	 })
+	.otherwise({redirectTo: '/'});
+   })
+   .factory("Contact",function($resource){
+	return $resource("/users/:id");
+    })
+   .controller('usernames',function($scope,$resource,Contact){
+   	console.log("reached");
+	$scope.contacts = Contact.query();
+	
+    })
+   .controller('user',function($scope,$resource,$routeParams, Contact){
+	$scope.contact = Contact.get({id:$routeParams.id})
+	
+    })
+
+</script>
+</body>
+</html>
